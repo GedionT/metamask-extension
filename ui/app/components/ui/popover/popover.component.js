@@ -13,19 +13,26 @@ const Popover = ({
   onBack,
   onClose,
   className,
+  mediumHeight,
+  onScroll,
   contentClassName,
   showArrow,
   CustomBackground,
+  containerRef,
 }) => {
   const t = useI18nContext();
   return (
-    <div className="popover-container">
+    <div className="popover-container" onScroll={onScroll} ref={containerRef}>
       {CustomBackground ? (
         <CustomBackground onClose={onClose} />
       ) : (
         <div className="popover-bg" onClick={onClose} />
       )}
-      <section className={classnames('popover-wrap', className)}>
+      <section
+        className={classnames('popover-wrap', className, {
+          'popover-wrap--medium-height': mediumHeight,
+        })}
+      >
         {showArrow ? <div className="popover-arrow" /> : null}
         <header className="popover-header">
           <div className="popover-header__title">
@@ -76,6 +83,7 @@ Popover.propTypes = {
   contentClassName: PropTypes.string,
   className: PropTypes.string,
   showArrow: PropTypes.bool,
+  mediumHeight: PropTypes.bool,
 };
 
 export default class PopoverPortal extends PureComponent {
